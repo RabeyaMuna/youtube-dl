@@ -101,7 +101,7 @@ class TestAllURLsMatching(unittest.TestCase):
 
     # https://github.com/ytdl-org/youtube-dl/issues/1930
     def test_soundcloud_not_matching_sets(self):
-        self.assertMatch('http://soundcloud.com/floex/sets/gone-ep', ['soundcloud:set'])
+        self.assertFalse('soundcloud:set' in self.matching_ies('http://soundcloud.com/floex/sets/gone-ep'))
 
     def test_tumblr(self):
         self.assertMatch('http://tatianamaslanydaily.tumblr.com/post/54196191430/orphan-black-dvd-extra-behind-the-scenes', ['Tumblr'])

@@ -43,13 +43,13 @@ class TestExecution(unittest.TestCase):
             [sys.executable, '-m', self.module, encodeArgument('ä'), '--version'],
             cwd=rootDir, stdout=_DEV_NULL, stderr=subprocess.PIPE)
         _, stderr = p.communicate()
-        self.assertFalse(stderr)
+        self.assertEqual(stderr, b'')
 
     def test_lazy_extractors(self):
         lazy_extractors = os.path.normpath('youtube_dl/extractor/lazy_extractors.py')
         try:
             subprocess.check_call([sys.executable, os.path.normpath('devscripts/make_lazy_extractors.py'), lazy_extractors], cwd=rootDir, stdout=_DEV_NULL)
-            subprocess.check_call([sys.executable, os.path.normpath('test/test_all_urls.py')], cwd=rootDir, stdout=_DEV_NULL)
+            subprocess.check_call([sys.executable, os.path.normpath('test/test_all_urls.py')], cwd=rootDir, stdout=subprocess.PIPE)
         finally:
             for x in ('', 'c') if sys.version_info[0] < 3 else ('',):
                 try:
